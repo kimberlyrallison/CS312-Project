@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import Login from './components/LoginPage';
+import Register from './components/RegistrationPage';
 import Home from './components/Home';
 import HomeButton from './components/HomeButton';
 import MealLogging from './components/MealLogging';
@@ -15,12 +17,13 @@ const App = () => {
       <div className="App">
         <header>
           <h1>Fitness Platform</h1>
-          <HomeButton />
         </header>
 
         <div className="container">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/workout-plans" element={<WorkoutPage />} />
             <Route path="/meal-logging" element={<MealLogging />} />
             <Route path="/video-search" element={<VideoSearch />} /> 

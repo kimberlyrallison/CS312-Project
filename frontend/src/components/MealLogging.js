@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './MealLogging.css';
+import HomeButton from './HomeButton';
 
 const MealLogging = () => {
   const [meal, setMeal] = useState('');
@@ -15,6 +16,7 @@ const MealLogging = () => {
 
   return (
     <div className="meal-logging-container">
+      <HomeButton />
       <h2>Meal Logging</h2>
       <form onSubmit={handleSubmit} className="meal-form">
         <label htmlFor="meal">Meal Name:</label>

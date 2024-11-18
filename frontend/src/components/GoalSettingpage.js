@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './GoalSettingPage.css';
+import HomeButton from './HomeButton';
 
 const GoalSettingPage = () => {
   const [goal, setGoal] = useState('');
@@ -28,6 +29,7 @@ const GoalSettingPage = () => {
 
   return (
     <div className="goal-setting-page">
+      <HomeButton />
       <h2>Set Your Fitness Goal</h2>
 
       <form onSubmit={handleSubmit} className="goal-form">

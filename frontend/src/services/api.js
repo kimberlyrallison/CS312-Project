@@ -11,3 +11,30 @@ export const getWorkoutPlans = async () => {
     throw error;
   }
 };
+
+export const postLogin = async (username, password) => {
+  try {
+    const response = await axios.post(`${API_URL}/login`,
+      {username, password}
+    );
+
+    return response.status; 
+
+  } catch (error) {
+    return 401;
+  }
+};
+
+export const postRegister = async (username, password) => {
+  try {
+    console.log("1")
+    const response = await axios.post(`${API_URL}/register`,
+      {username, password}
+    );
+    console.log(response.status);
+    return response.status; 
+
+  } catch (error) {
+    return 401;
+  }
+};

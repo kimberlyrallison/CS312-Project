@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './VideoSearch.css';
+import HomeButton from './HomeButton';
 
 const VideoSearch = () => {
   const [query, setQuery] = useState('');
@@ -19,6 +20,7 @@ const VideoSearch = () => {
 
   return (
     <div className="video-search-container">
+      <HomeButton />
       <h2>Search Fitness Videos</h2>
       <form onSubmit={handleSearch} className="search-form">
         <input

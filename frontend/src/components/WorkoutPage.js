@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar'; 
 import './WorkoutPage.css'; 
+import HomeButton from './HomeButton';
+
 const WorkoutPage = () => {
   const [date, setDate] = useState(new Date());
   const [workoutDescription, setWorkoutDescription] = useState('');
@@ -27,6 +29,7 @@ const WorkoutPage = () => {
 
   return (
     <div className="workout-page-container">
+      <HomeButton />
       <h2>Workout Plan</h2>
 
       <div className="calendar-container">
