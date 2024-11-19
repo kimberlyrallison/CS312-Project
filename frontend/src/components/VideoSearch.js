@@ -1,3 +1,5 @@
+//note to self: add a bookmark feature to save the videos
+
 import React, { useState } from 'react';
 import './VideoSearch.css';
 import HomeButton from './HomeButton';
@@ -16,6 +18,16 @@ const VideoSearch = () => {
       video.title.toLowerCase().includes(query.toLowerCase())
     );
     setVideos(filteredVideos);
+  };
+
+  // Getting the YouTube ID for the icon
+  const getVideoId = (url) => {
+    const match = url.match(/(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/[^\n\s]+\/|\S+?v=|(?:v|e(?:mbed)?)\/|\S{11}))/);
+    if (match) {
+      const urlParam = new URLSearchParams(new URL(url).search);
+      return urlParam.get('v');
+    }
+    return null;
   };
 
   return (
@@ -37,13 +49,19 @@ const VideoSearch = () => {
         {videos.length === 0 ? (
           <li>No videos found</li>
         ) : (
-          videos.map((video, index) => (
-            <li key={index}>
-              <a href={video.url} target="_blank" rel="noopener noreferrer">
-                {video.title}
-              </a>
-            </li>
-          ))
+          videos.map((video, index) => {
+            const videoId = getVideoId(video.url);
+            const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/0.jpg` : '';
+
+            return (
+              <li key={index}>
+                <a href={video.url} target="_blank" rel="noopener noreferrer">
+                  <img src={thumbnailUrl} alt={video.title} width="50" height="50" style={{ marginRight: '10px' }} />
+                  {video.title}
+                </a>
+              </li>
+            );
+          })
         )}
       </ul>
     </div>
