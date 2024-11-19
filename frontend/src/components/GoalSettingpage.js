@@ -6,6 +6,7 @@ const GoalSettingPage = () => {
   const [goal, setGoal] = useState('');
   const [goalType, setGoalType] = useState('');
   const [targetDate, setTargetDate] = useState('');
+  const [fitnessCategory, setFitnessCategory] = useState(''); // New state for fitness category
   const [userGoals, setUserGoals] = useState([]);
 
   const handleSubmit = (e) => {
@@ -13,12 +14,13 @@ const GoalSettingPage = () => {
 
     setUserGoals([
       ...userGoals,
-      { goal, goalType, targetDate, progress: 0 }
+      { goal, goalType, targetDate, fitnessCategory, progress: 0 }
     ]);
 
     setGoal('');
     setGoalType('');
     setTargetDate('');
+    setFitnessCategory('');
   };
 
   const updateProgress = (index, progressValue) => {
@@ -72,6 +74,23 @@ const GoalSettingPage = () => {
           />
         </div>
 
+        <div className="form-group">
+          <label htmlFor="fitnessCategory">Fitness Category</label>
+          <select
+            id="fitnessCategory"
+            value={fitnessCategory}
+            onChange={(e) => setFitnessCategory(e.target.value)}
+            required
+          >
+            <option value="">Select Fitness Category</option>
+            <option value="Strength Training">Strength Training</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Yoga">Yoga</option>
+            <option value="Pilates">Pilates</option>
+            <option value="HIIT">HIIT</option>
+          </select>
+        </div>
+
         <button type="submit" className="submit-btn">Set Goal</button>
       </form>
 
@@ -84,7 +103,8 @@ const GoalSettingPage = () => {
                 <p><strong>Goal:</strong> {goalItem.goal}</p>
                 <p><strong>Type:</strong> {goalItem.goalType}</p>
                 <p><strong>Target Date:</strong> {goalItem.targetDate}</p>
-                
+                <p><strong>Fitness Category:</strong> {goalItem.fitnessCategory}</p> {/* Displaying the fitness category */}
+
                 {/* Progress bar */}
                 <div className="progress-container">
                   <p>Progress: {goalItem.progress}%</p>
