@@ -51,4 +51,9 @@
     font-size: 1.1rem;
     padding: 5px;
   }
+
+/*new arrival, note to self, make sure to */
+  p {
+    background-color: rgb(255, 253, 133);
+  }
   
