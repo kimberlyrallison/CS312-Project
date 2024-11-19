@@ -1,3 +1,5 @@
+//Added date and time and week day- Alyssa
+//Added a placement for suggestion box where it'll read off
 import React, { useState } from 'react';
 import './MealLogging.css';
 import HomeButton from './HomeButton';
@@ -9,7 +11,19 @@ const MealLogging = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLog([...log, { meal, calories }]);
+
+    //getting date and time
+    const currentDate = new Date();
+
+    //establishing a strings of week
+    const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const currentDayOfWeek = dayOfWeek[currentDate.getDay()];
+
+    //formating date and time
+    const dateStr = currentDate.toLocaleString();
+
+    //changed
+    setLog([...log, { meal, calories, date: dateStr, day: currentDayOfWeek }]);
     setMeal('');
     setCalories('');
   };
@@ -18,6 +32,11 @@ const MealLogging = () => {
     <div className="meal-logging-container">
       <HomeButton />
       <h2>Meal Logging</h2>
+      <div>
+        <h4>Suggestions!:</h4>
+        <p>Keep Going!</p><br></br>
+      </div>
+
       <form onSubmit={handleSubmit} className="meal-form">
         <label htmlFor="meal">Meal Name:</label>
         <input
@@ -44,7 +63,7 @@ const MealLogging = () => {
       <ul>
         {log.map((entry, index) => (
           <li key={index}>
-            {entry.meal} - {entry.calories} kcal
+            {entry.meal} - {entry.calories} kcal - <strong>{entry.day}</strong> - <em>{entry.date}</em>
           </li>
         ))}
       </ul>
