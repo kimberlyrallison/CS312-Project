@@ -25,3 +25,15 @@ ALTER TABLE IF EXISTS public.credentials
 
 INSERT INTO public.credentials
 VALUES ('admin', 'password')
+
+-- Workout Plans Table
+CREATE TABLE workout_plans (
+    plan_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),  
+    goal VARCHAR(255),
+    fitness_level VARCHAR(50),              
+    equipment_required BOOLEAN DEFAULT FALSE,
+    plan_name VARCHAR(100) NOT NULL,         
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
