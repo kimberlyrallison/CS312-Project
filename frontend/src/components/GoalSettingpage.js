@@ -1,26 +1,64 @@
 import React, { useState } from 'react';
 import './GoalSettingPage.css';
-import HomeButton from './HomeButton';
 
 const GoalSettingPage = () => {
   const [goal, setGoal] = useState('');
   const [goalType, setGoalType] = useState('');
   const [targetDate, setTargetDate] = useState('');
-  const [fitnessCategory, setFitnessCategory] = useState(''); // New state for fitness category
   const [userGoals, setUserGoals] = useState([]);
 
-  const handleSubmit = (e) => {
+  const [measurements, setMeasurements] = useState({
+    weight: '',
+    height: '',
+    age: '',
+  });
+
+  const [dynamicGoals, setDynamicGoals] = useState([]);
+
+  const handleGoalSubmit = (e) => {
     e.preventDefault();
 
     setUserGoals([
       ...userGoals,
-      { goal, goalType, targetDate, fitnessCategory, progress: 0 }
+      { goal, goalType, targetDate, progress: 0 }
     ]);
 
     setGoal('');
     setGoalType('');
     setTargetDate('');
-    setFitnessCategory('');
+  };
+
+  const handleMeasurementsSubmit = (e) => {
+    e.preventDefault();
+
+    const { weight, height, age } = measurements;
+    if (!weight || !height || !age) {
+      alert('Please fill out all measurement fields.');
+      return;
+    }
+
+    const heightInMeters = height * 0.0254;
+    const weightInKg = weight * 0.453592;
+    const bmi = weightInKg / (heightInMeters ** 2);
+
+    const newDynamicGoals = [];
+    if (weight > 200) {
+      newDynamicGoals.push('Focus on reducing weight to a healthier range.');
+    }
+    if (bmi < 18.5) {
+      newDynamicGoals.push('Include strength-building exercises to gain healthy weight.');
+    }
+    if (age > 40) {
+      newDynamicGoals.push('Prioritize flexibility and low-impact endurance exercises.');
+    }
+    if (bmi >= 25) {
+      newDynamicGoals.push('Incorporate cardio and monitor diet to lower BMI.');
+    }
+
+    setDynamicGoals(newDynamicGoals);
+
+    alert('Measurements saved and goals updated!');
+    setMeasurements({ weight: '', height: '', age: '' });
   };
 
   const updateProgress = (index, progressValue) => {
@@ -31,10 +69,9 @@ const GoalSettingPage = () => {
 
   return (
     <div className="goal-setting-page">
-      <HomeButton />
       <h2>Set Your Fitness Goal</h2>
 
-      <form onSubmit={handleSubmit} className="goal-form">
+      <form onSubmit={handleGoalSubmit} className="goal-form">
         <div className="form-group">
           <label htmlFor="goal">Goal</label>
           <input
@@ -74,25 +111,69 @@ const GoalSettingPage = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="fitnessCategory">Fitness Category</label>
-          <select
-            id="fitnessCategory"
-            value={fitnessCategory}
-            onChange={(e) => setFitnessCategory(e.target.value)}
-            required
-          >
-            <option value="">Select Fitness Category</option>
-            <option value="Strength Training">Strength Training</option>
-            <option value="Cardio">Cardio</option>
-            <option value="Yoga">Yoga</option>
-            <option value="Pilates">Pilates</option>
-            <option value="HIIT">HIIT</option>
-          </select>
-        </div>
-
         <button type="submit" className="submit-btn">Set Goal</button>
       </form>
+
+      <h2>Enter Your Measurements</h2>
+      <form onSubmit={handleMeasurementsSubmit} className="measurements-form">
+        <div className="form-group">
+          <label htmlFor="weight">Weight (lbs):</label>
+          <input
+            type="number"
+            id="weight"
+            name="weight"
+            value={measurements.weight}
+            onChange={(e) =>
+              setMeasurements({ ...measurements, weight: e.target.value })
+            }
+            placeholder="Enter your weight in pounds"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="height">Height (in):</label>
+          <input
+            type="number"
+            id="height"
+            name="height"
+            value={measurements.height}
+            onChange={(e) =>
+              setMeasurements({ ...measurements, height: e.target.value })
+            }
+            placeholder="Enter your height in inches"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="age">Age:</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            value={measurements.age}
+            onChange={(e) =>
+              setMeasurements({ ...measurements, age: e.target.value })
+            }
+            placeholder="Enter your age"
+            required
+          />
+        </div>
+
+        <button type="submit" className="submit-btn">Save Measurements</button>
+      </form>
+
+      <h2> Goals Based on Measurements</h2>
+      {dynamicGoals.length > 0 ? (
+        <ul className="dynamic-goals">
+          {dynamicGoals.map((dynamicGoal, index) => (
+            <li key={index}>{dynamicGoal}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No goals generated yet. Enter measurements to see personalized goals.</p>
+      )}
 
       {userGoals.length > 0 && (
         <div className="goal-display">
@@ -103,9 +184,7 @@ const GoalSettingPage = () => {
                 <p><strong>Goal:</strong> {goalItem.goal}</p>
                 <p><strong>Type:</strong> {goalItem.goalType}</p>
                 <p><strong>Target Date:</strong> {goalItem.targetDate}</p>
-                <p><strong>Fitness Category:</strong> {goalItem.fitnessCategory}</p> {/* Displaying the fitness category */}
-
-                {/* Progress bar */}
+                
                 <div className="progress-container">
                   <p>Progress: {goalItem.progress}%</p>
                   <progress value={goalItem.progress} max="100"></progress>
