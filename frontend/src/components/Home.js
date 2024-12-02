@@ -1,6 +1,8 @@
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 import "./Home.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
   const achievementList = [
@@ -13,12 +15,14 @@ const Home = () => {
     {title: "Marathoner", description: "Run 26.2 miles in one aerobic activity"}
   ];
 
-
+  const handleAchievement = (e) => {
+    e.preventDefault();
+    toast("You completed an achievement! Nice work!");
+  };
 
   return (
     <div>
       <h2>Welcome to the Fitness Platform!</h2>
-      <p>Choose a page to get started:</p>
       <ul>
         <div className="link-box">
         <li><Link className="nav-link" to="/workout-plans">Workout Plans</Link></li>
@@ -34,11 +38,11 @@ const Home = () => {
           <box key={index} className="achievement-card">
             <p><strong>{achievement.title}</strong></p><br/>
             <div className='description-box'>{achievement.description}</div>
-            <button>Complete</button>
+            <button onClick={handleAchievement}>Complete</button>
           </box>
         ))}
       </div>
-
+      <ToastContainer/>
     </div>
   );
 };
