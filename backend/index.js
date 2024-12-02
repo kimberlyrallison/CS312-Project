@@ -7,6 +7,7 @@ const workoutPlansRouter = require('./routes/workoutPlans');
 const loginRouter = require('./routes/login'); 
 var session = require('express-session');
 const registerRouter = require('./routes/register');
+const mealLoggingRouter = require('./routes/mealLogging');
 
 
 require('dotenv').config(); 
@@ -25,6 +26,7 @@ app.use(
 app.use('/api/workout-plans', workoutPlansRouter); 
 app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
+app.use('/api/register', mealLoggingRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

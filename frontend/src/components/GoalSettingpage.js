@@ -68,6 +68,10 @@ const GoalSettingPage = () => {
   };
 
   return (
+    <>
+    <div className='workout-achievements'>
+    </div>
+
     <div className="goal-setting-page">
       <h2>Set Your Fitness Goal</h2>
 
@@ -208,6 +212,11 @@ const GoalSettingPage = () => {
         </div>
       )}
     </div>
+
+    <div className="health-achievements">
+
+    </div>
+    </>
   );
 };
 

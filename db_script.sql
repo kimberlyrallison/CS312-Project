@@ -13,7 +13,7 @@ CREATE DATABASE fitness_platform
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 
--- create user credential table
+-- User Credential Table
 CREATE TABLE public.credentials
 (
     username character varying(255) NOT NULL,
@@ -23,6 +23,7 @@ CREATE TABLE public.credentials
 ALTER TABLE IF EXISTS public.credentials
     OWNER to postgres;
 
+-- Add admin information
 INSERT INTO public.credentials
 VALUES ('admin', 'password')
 
@@ -37,3 +38,5 @@ CREATE TABLE workout_plans (
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Badges Table

@@ -1,0 +1,42 @@
+.achievement-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.achievement-card {
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto; 
+}
+
+.description-box {
+    background-color: rgb(246, 242, 242);
+    padding: 5px;
+    border-radius: 10px;   
+}
+
+.link-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.nav-link {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 40px;
+    font-size: 1.2rem;
+    border: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}

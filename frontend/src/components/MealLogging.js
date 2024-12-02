@@ -9,6 +9,12 @@ const MealLogging = () => {
   const [calories, setCalories] = useState('');
   const [log, setLog] = useState([]);
 
+  const [sleepDay, setDay] = useState('');
+  const [sleepHours, setHours] = useState('');
+  const [sleepLog, setSleep] = useState([]);
+
+  const [suggestions, setSuggestions] = useState([]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -19,6 +25,12 @@ const MealLogging = () => {
     const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const currentDayOfWeek = dayOfWeek[currentDate.getDay()];
 
+    // suggestions
+    if( calories > 800 ) 
+    {
+      suggestions.push("Try increasing the number of small meals consumed throughout the day.");
+    }
+
     //formating date and time
     const dateStr = currentDate.toLocaleString();
 
@@ -28,15 +40,37 @@ const MealLogging = () => {
     setCalories('');
   };
 
+  const handleSleep = (e) => {
+    e.preventDefault();
+
+    // set day and time
+    var currentDate = new Date;
+    setSleep([...sleepLog, { day: sleepDay, hours: sleepHours}]);
+    setDay('');
+    setHours('');
+
+    // add suggestions
+    if( sleepHours < 7 || sleepHours > 10 )
+    {
+      suggestions.push("Try to sleep between 7 and 10 hours each night")
+    }
+  }
+
   return (
-    <div className="meal-logging-container">
+    <div className="logging-container">
       <HomeButton />
-      <h2>Meal Logging</h2>
+      <h2>Wellness Log</h2>
       <div>
-        <h4>Suggestions!:</h4>
-        <p>Keep Going!</p><br></br>
+        <h4>Suggestions:</h4>
+        {suggestions.map((entry, index) => (
+          <li key={index}>
+            {entry}
+          </li>
+        ))}
       </div>
 
+    <div className="input-container-grid">
+    <div>
       <form onSubmit={handleSubmit} className="meal-form">
         <label htmlFor="meal">Meal Name:</label>
         <input
@@ -57,13 +91,48 @@ const MealLogging = () => {
         />
         
         <button type="submit">Log Meal</button>
-      </form>
+      </form><br/>
+    </div>
 
-      <h3>Logged Meals:</h3>
+    <div>
+      <form onSubmit={handleSleep} className="meal-form">
+        <label htmlFor="meal">Weekday:</label>
+        <input
+          type="text"
+          id="sleepDay"
+          value={sleepDay}
+          onChange={(e) => setDay(e.target.value)}
+          required
+        />
+        
+        <label htmlFor="hours">Hours:</label>
+        <input
+          type="number"
+          id="sleepHours"
+          value={sleepHours}
+          onChange={(e) => setHours(e.target.value)}
+          required
+        />
+        
+        <button type="submit">Log Sleep</button>
+      </form>
+    </div>
+    </div>
+
+      <h3>Meal Log:</h3>
       <ul>
         {log.map((entry, index) => (
           <li key={index}>
             {entry.meal} - {entry.calories} kcal - <strong>{entry.day}</strong> - <em>{entry.date}</em>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Sleep Log:</h3>
+      <ul>
+        {sleepLog.map((entry, index) => (
+          <li key={index}>
+            <strong>{entry.day}</strong>: {entry.hours} hours
           </li>
         ))}
       </ul>
